@@ -37,6 +37,9 @@ public class Client {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "user_role")
+    private String role;
+
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
