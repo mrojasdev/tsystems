@@ -1,13 +1,10 @@
 package com.mrojasdev.tsystemstore.repository;
 
 import com.mrojasdev.tsystemstore.model.Client;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface ClientRepository extends JpaRepository<Client, Long> {
 
-public interface ClientRepository extends CrudRepository<Client, Long> {
-
-    Client findById(long id);
 
     Client findByEmail(String email);
 }
