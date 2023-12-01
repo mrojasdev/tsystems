@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "Orders")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -25,7 +26,7 @@ public class Order {
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "client_address_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_address", referencedColumnName = "id")
     private ClientAddress clientAddress;
 
     @Column(name = "payment_method")

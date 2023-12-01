@@ -1,10 +1,12 @@
 package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.ClientNotFoundException;
+import com.mrojasdev.tsystemstore.exception.DuplicateClientEmailException;
 import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +38,12 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void addClient(Client client) {
-        clientRepository.save(client);
+        try{
+            clientRepository.save(client);
+        }catch(DataIntegrityViolationException ex){
+            throw new DuplicateClientEmailException("Email already exists in database");
+        }
+
     }
 
     @Override
