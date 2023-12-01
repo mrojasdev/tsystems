@@ -28,4 +28,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, details, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(DuplicateClientEmailException.class)
+    public final ResponseEntity<Object> handleDuplicateClientEmailException(DuplicateClientEmailException ex, WebRequest request){
+        String details = ex.getLocalizedMessage();
+        return handleExceptionInternal(ex, details, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
 }
