@@ -2,7 +2,9 @@ package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.ClientNotFoundException;
 import com.mrojasdev.tsystemstore.exception.DuplicateClientEmailException;
+import com.mrojasdev.tsystemstore.mapper.ClientMapper;
 import com.mrojasdev.tsystemstore.model.Client;
+import com.mrojasdev.tsystemstore.model.ClientDTO;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +22,24 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private ClientMapper clientMapper;
+
 
     @Override
     @Transactional
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public List<ClientDTO> getAllClients() {
+        List<Client> clients = clientRepository.findAll();
+        return clientMapper.clientsToClientsDTO(clients);
     }
 
     @Override
     @Transactional
-    public Client getClientById(long clientId) {
-        return clientRepository.findById(clientId).orElseThrow(
+    public ClientDTO getClientById(long clientId) {
+        Client client = clientRepository.findById(clientId).orElseThrow(
                 () -> new ClientNotFoundException("Client with id "+clientId+" not found")
         );
+        return clientMapper.clientToClientDTO(client);
     }
 
     @Override

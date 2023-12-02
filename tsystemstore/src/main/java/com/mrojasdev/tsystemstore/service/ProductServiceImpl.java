@@ -1,7 +1,9 @@
 package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.ProductNotFoundException;
+import com.mrojasdev.tsystemstore.mapper.ProductMapper;
 import com.mrojasdev.tsystemstore.model.Product;
+import com.mrojasdev.tsystemstore.model.ProductDTO;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +20,23 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductMapper productMapper;
+
     @Override
     @Transactional
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return productMapper.productsToProductsDTO(products);
     }
 
     @Override
     @Transactional
-    public Product getProductById(long productId) {
-        return productRepository.findById(productId).orElseThrow(
+    public ProductDTO getProductById(long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(
                 () -> new ProductNotFoundException("Product with id "+productId+" not found")
         );
+        return productMapper.productToProductDTO(product);
     }
 
     @Override

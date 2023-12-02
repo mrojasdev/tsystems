@@ -22,7 +22,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             ClientNotFoundException.class, AddressNotFoundException.class, OrderNotFoundException.class,
             ProductNotFoundException.class
     })
-    public final ResponseEntity<Object> handleEntityNotFound(ClientNotFoundException ex, WebRequest request){
+    public final ResponseEntity<Object> handleEntityNotFound(RuntimeException ex, WebRequest request){
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         return handleExceptionInternal(ex, details, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

@@ -1,7 +1,9 @@
 package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.AddressNotFoundException;
+import com.mrojasdev.tsystemstore.mapper.ClientAddressMapper;
 import com.mrojasdev.tsystemstore.model.ClientAddress;
+import com.mrojasdev.tsystemstore.model.ClientAddressDTO;
 import com.mrojasdev.tsystemstore.repository.ClientAddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +20,23 @@ public class ClientAddressServiceImpl implements ClientAddressService {
     @Autowired
     private ClientAddressRepository clientAddressRepository;
 
+    @Autowired
+    private ClientAddressMapper clientAddressMapper;
+
     @Override
     @Transactional
-    public List<ClientAddress> getAllAddresses() {
-        return clientAddressRepository.findAll();
+    public List<ClientAddressDTO> getAllAddresses() {
+        List<ClientAddress> addresses = clientAddressRepository.findAll();
+        return clientAddressMapper.clientAdressesToClientAddressesDTO(addresses);
     }
 
     @Override
     @Transactional
-    public ClientAddress getAddressById(long addressId) {
-        return clientAddressRepository.findById(addressId).orElseThrow(
+    public ClientAddressDTO getAddressById(long addressId) {
+        ClientAddress address = clientAddressRepository.findById(addressId).orElseThrow(
                 () -> new AddressNotFoundException("address with id "+addressId+" not found")
         );
+        return clientAddressMapper.clientAddressToClientAddressDTO(address);
     }
 
     @Override

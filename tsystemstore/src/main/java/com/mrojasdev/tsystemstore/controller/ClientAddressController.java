@@ -1,6 +1,7 @@
 package com.mrojasdev.tsystemstore.controller;
 
 import com.mrojasdev.tsystemstore.model.ClientAddress;
+import com.mrojasdev.tsystemstore.model.ClientAddressDTO;
 import com.mrojasdev.tsystemstore.service.ClientAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,12 @@ public class ClientAddressController {
     }
 
     @GetMapping
-    public List<ClientAddress> getAllAddresses() {
+    public List<ClientAddressDTO> getAllAddresses() {
         return clientAddressService.getAllAddresses();
     }
 
     @GetMapping("/{id}")
-    public ClientAddress getAddressById(@PathVariable Long id) {
+    public ClientAddressDTO getAddressById(@PathVariable Long id) {
         return clientAddressService.getAddressById(id);
     }
 

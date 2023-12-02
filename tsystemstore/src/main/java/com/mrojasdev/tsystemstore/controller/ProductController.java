@@ -2,6 +2,7 @@ package com.mrojasdev.tsystemstore.controller;
 
 import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.model.Product;
+import com.mrojasdev.tsystemstore.model.ProductDTO;
 import com.mrojasdev.tsystemstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,12 @@ public class ProductController {
     public ProductController(ProductService productService) {this.productService = productService; }
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public ProductDTO getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 

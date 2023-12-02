@@ -1,6 +1,7 @@
 package com.mrojasdev.tsystemstore.controller;
 
 import com.mrojasdev.tsystemstore.model.Order;
+import com.mrojasdev.tsystemstore.model.OrderDTO;
 import com.mrojasdev.tsystemstore.service.OrderService;
 import com.mrojasdev.tsystemstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<OrderDTO> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping("/{id}")
-    public Order getOrderById(@PathVariable Long id) {
+    public OrderDTO getOrderById(@PathVariable Long id) {
         return orderService.getOrderById(id);
     }
 

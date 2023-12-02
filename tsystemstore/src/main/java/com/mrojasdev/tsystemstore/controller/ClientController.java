@@ -1,6 +1,7 @@
 package com.mrojasdev.tsystemstore.controller;
 
 import com.mrojasdev.tsystemstore.model.Client;
+import com.mrojasdev.tsystemstore.model.ClientDTO;
 import com.mrojasdev.tsystemstore.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,12 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> getAllClients() {
+    public List<ClientDTO> getAllClients() {
         return clientService.getAllClients();
     }
 
     @GetMapping("/{id}")
-    public Client getClientById(@PathVariable Long id) {
+    public ClientDTO getClientById(@PathVariable Long id) {
         return clientService.getClientById(id);
     }
 
