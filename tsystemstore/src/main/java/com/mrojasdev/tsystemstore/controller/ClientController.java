@@ -42,4 +42,10 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
+        clientService.updateClient(id, updatedClient);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

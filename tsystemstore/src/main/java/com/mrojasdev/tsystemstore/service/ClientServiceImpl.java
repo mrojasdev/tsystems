@@ -52,7 +52,6 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> existingClient = clientRepository.findById(clientId);
         if(existingClient.isPresent()){
             Client clientToUpdate = existingClient.get();
-            clientToUpdate.setAddresses(updatedClient.getAddresses());
             clientToUpdate.setBirthdate(updatedClient.getBirthdate());
             clientToUpdate.setFirstname(updatedClient.getFirstname());
             clientToUpdate.setSurname(updatedClient.getSurname());
