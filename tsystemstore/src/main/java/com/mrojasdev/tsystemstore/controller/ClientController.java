@@ -2,6 +2,7 @@ package com.mrojasdev.tsystemstore.controller;
 
 import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientDTO;
+import com.mrojasdev.tsystemstore.model.OrderDTO;
 import com.mrojasdev.tsystemstore.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,14 @@ public class ClientController {
     public ResponseEntity<Void> updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
         clientService.updateClient(id, updatedClient);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /*
+    Lists all the orders made by a given Client
+     */
+    @GetMapping("/{id}/orders")
+    public List<OrderDTO> listClientOrders(@PathVariable Long id) {
+        return clientService.listClientOrders(id);
     }
 
 }

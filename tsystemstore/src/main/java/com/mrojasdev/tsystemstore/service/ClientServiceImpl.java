@@ -3,9 +3,13 @@ package com.mrojasdev.tsystemstore.service;
 import com.mrojasdev.tsystemstore.exception.ClientNotFoundException;
 import com.mrojasdev.tsystemstore.exception.DuplicateClientEmailException;
 import com.mrojasdev.tsystemstore.mapper.ClientMapper;
+import com.mrojasdev.tsystemstore.mapper.OrderMapper;
 import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientDTO;
+import com.mrojasdev.tsystemstore.model.Order;
+import com.mrojasdev.tsystemstore.model.OrderDTO;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
+import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,7 +27,13 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private ClientMapper clientMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
 
     @Override
@@ -73,5 +83,14 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public void deleteClient(long clientId) {
         clientRepository.deleteById(clientId);
+    }
+
+    @Override
+    @Transactional
+    public List<OrderDTO> listClientOrders(long clientId){
+        List<Order> orders = orderRepository.findAll().stream()
+                .filter(order -> order.getClient().getId().equals(clientId))
+                .toList();
+        return orderMapper.ordersToOrdersDTO(orders);
     }
 }
