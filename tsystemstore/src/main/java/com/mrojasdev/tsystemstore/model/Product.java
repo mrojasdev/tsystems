@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "Products")
 @Getter
@@ -40,6 +43,10 @@ public class Product {
 
    @Column(name = "stock")
    private int stock;
+
+   @OneToMany(mappedBy = "product")
+   private List<OrderProduct> orderProducts;
+
 
 
 }

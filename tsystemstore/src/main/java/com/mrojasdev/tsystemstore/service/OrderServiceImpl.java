@@ -4,12 +4,14 @@ import com.mrojasdev.tsystemstore.exception.OrderNotFoundException;
 import com.mrojasdev.tsystemstore.mapper.OrderMapper;
 import com.mrojasdev.tsystemstore.model.Order;
 import com.mrojasdev.tsystemstore.model.OrderDTO;
+import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
