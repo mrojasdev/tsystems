@@ -71,4 +71,14 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(long productId) {
         productRepository.deleteById(productId);
     }
+
+    @Override
+    @Transactional
+    public List<ProductDTO> getProductsOfCategory(String category){
+        List<Product> products = productRepository.findAll();
+        products = products.stream().filter(product -> product.getCategory().equals(category)).toList();
+        return productMapper.productsToProductsDTO(products);
+    }
+
+
 }

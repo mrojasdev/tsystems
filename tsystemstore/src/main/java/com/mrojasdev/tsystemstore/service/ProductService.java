@@ -12,4 +12,5 @@ public interface ProductService {
     void addProduct(Product product);
     void updateProduct(long productId, Product product);
     void deleteProduct(long productId);
+    List<ProductDTO> getProductsOfCategory(String category);
 }
