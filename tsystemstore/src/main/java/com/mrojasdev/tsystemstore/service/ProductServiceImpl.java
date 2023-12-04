@@ -80,5 +80,13 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.productsToProductsDTO(products);
     }
 
+    @Override
+    @Transactional
+    public List<ProductDTO> getProductsOfColor(String color){
+        List<Product> products = productRepository.findAll();
+        products = products.stream().filter(product -> product.getColor().equals(color)).toList();
+        return productMapper.productsToProductsDTO(products);
+    }
+
 
 }

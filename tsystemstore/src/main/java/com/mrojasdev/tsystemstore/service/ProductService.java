@@ -13,4 +13,5 @@ public interface ProductService {
     void updateProduct(long productId, Product product);
     void deleteProduct(long productId);
     List<ProductDTO> getProductsOfCategory(String category);
+    List<ProductDTO> getProductsOfColor(String color);
 }

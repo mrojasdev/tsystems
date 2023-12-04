@@ -52,6 +52,11 @@ public class ProductController {
     public List<ProductDTO> getProductsOfCategory(@PathVariable String category) {
         return productService.getProductsOfCategory(category);
     }
+
+    @GetMapping("/color/{color}")
+    public List<ProductDTO> getProductsOfColor(@PathVariable String color) {
+        return productService.getProductsOfColor(color);
+    }
     
     
 }
