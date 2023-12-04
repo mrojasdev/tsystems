@@ -2,9 +2,11 @@ package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.OrderNotFoundException;
 import com.mrojasdev.tsystemstore.mapper.OrderMapper;
+import com.mrojasdev.tsystemstore.mapper.ProductMapper;
 import com.mrojasdev.tsystemstore.model.Order;
 import com.mrojasdev.tsystemstore.model.OrderDTO;
 import com.mrojasdev.tsystemstore.model.Product;
+import com.mrojasdev.tsystemstore.model.ProductDTO;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     @Override
     @Transactional
@@ -59,4 +64,20 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderNotFoundException("order doesn't exist in database");
         }
     }
+
+    @Override
+    @Transactional
+    public List<ProductDTO> listOrderProducts(long orderId){
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new OrderNotFoundException("order with id "+orderId+" not found")
+        );
+        List<ProductDTO> products = new ArrayList<>();
+        order.getOrderProducts().stream().forEach(orderProduct -> products.add(
+                productMapper.productToProductDTO(
+                        orderProduct.getProduct()
+                )
+        ));
+        return products;
+    }
+
 }

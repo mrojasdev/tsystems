@@ -2,6 +2,7 @@ package com.mrojasdev.tsystemstore.controller;
 
 import com.mrojasdev.tsystemstore.model.Order;
 import com.mrojasdev.tsystemstore.model.OrderDTO;
+import com.mrojasdev.tsystemstore.model.ProductDTO;
 import com.mrojasdev.tsystemstore.service.OrderService;
 import com.mrojasdev.tsystemstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class OrderController {
     public ResponseEntity<Void> updateOrderStatus(@PathVariable Long id, @RequestBody String status) {
         orderService.updateOrderStatus(id, status);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/products")
+    public List<ProductDTO> listOrderProducts(@PathVariable Long id){
+        return orderService.listOrderProducts(id);
     }
 
 
