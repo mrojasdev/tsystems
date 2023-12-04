@@ -88,5 +88,13 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.productsToProductsDTO(products);
     }
 
+    @Override
+    @Transactional
+    public List<ProductDTO> getProductsOfBrand(String brand){
+        List<Product> products = productRepository.findAll();
+        products = products.stream().filter(product -> product.getBrand().equals(brand)).toList();
+        return productMapper.productsToProductsDTO(products);
+    }
+
 
 }
