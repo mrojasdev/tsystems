@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ClientDTO implements Serializable {
 
+    private long id;
     private String firstname;
     private String surname;
     private LocalDate birthdate;
