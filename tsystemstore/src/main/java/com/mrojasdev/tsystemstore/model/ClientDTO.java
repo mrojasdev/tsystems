@@ -17,5 +17,6 @@ public class ClientDTO implements Serializable {
     private String surname;
     private LocalDate birthdate;
     private String email;
+    private String role;
 
 }
