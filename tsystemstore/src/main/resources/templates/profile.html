@@ -23,70 +23,77 @@
             </div>
         </header>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Arietta Instruments</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="d-flex me-4">
-                        <button class="btn btn-outline-light" type="submit">
-                            <i class="bi bi-gear-fill"></i>
-                            Managing Area
-                        </button>
-                    </form>
-                    <form class="d-flex me-4">
-                        <button class="btn btn-outline-light" type="submit">
-                            <i class="bi bi-person"></i>
-                            Client Area
-                        </button>
-                    </form>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-light" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-white text-black ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
+        <nav th:replace="~{fragments :: adminnav}"></nav>
         <!-- Section-->
         <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
+            <div class="container px-4 px-lg-5 mt-2">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-3">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder" th:text="${client.firstname}">Product Title</h5>
-                                    <!-- Product price-->
-                                    <p class="card-text"><small class="text-muted">Category: <span th:text="${client.role}">category</span><br/>Brand: <span th:text="${client.id}">brand</span><br/> Color: <span th:text="${client.birthdate}">color</span></small></p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <a th:href="@{/addresses}" class="card-link">
+                                        <div class="card bg-dark text-white text-center">
+                                            <div class="card-body">
+                                                <i class="bi bi-truck"></i>
+                                                <p class="card-text">My Addresses</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart <i class="bi-cart-fill me1"></i></a></div>
+                                <div class="col-md-6">
+                                    <a th:href="@{/orders}" class="card-link">
+                                        <div class="card bg-dark text-white text-center">
+                                            <div class="card-body">
+                                                <i class="bi bi-box-seam"></i>
+                                                <p class="card-text">Order History</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End of product-->
+                    <!-- End of section-->
+                </div>
+                <div class="container mt-2 mb-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control-plaintext" id="firstName" value="Client name" th:attr="value = ${client.firstname}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control-plaintext" id="lastName" value="Client Surname" th:attr="value = ${client.surname}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control-plaintext" id="email" value="clientemail@example.com" th:attr="value = ${client.email}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="birthdate" class="col-sm-3 col-form-label">Birthdate</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control-plaintext" id="birthdate" value="1990-01-01" th:attr="value = ${client.birthdate}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-center">
+                                            <a th:href="@{/edit-profile}" class="btn btn-primary">Edit Profile</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

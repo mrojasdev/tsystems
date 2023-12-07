@@ -10,6 +10,8 @@ import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
