@@ -4,11 +4,13 @@ import com.mrojasdev.tsystemstore.mapper.ClientAddressMapper;
 import com.mrojasdev.tsystemstore.mapper.ClientMapper;
 import com.mrojasdev.tsystemstore.mapper.OrderMapper;
 import com.mrojasdev.tsystemstore.mapper.ProductMapper;
+import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.repository.ClientAddressRepository;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,15 @@ public class WebController {
     @Autowired
     private ProductMapper productMapper;
 
+    private Client getCurrentClient() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = null;
+        if(principal instanceof Client){
+            client = ((Client) principal);
+        }
+        return client;
+    }
+
 
     @GetMapping("/")
     public String getHome() {
@@ -53,6 +64,14 @@ public class WebController {
         model.addAttribute("products", productMapper.productsToProductsDTO(productRepository.findAll()));
         return "products";
     }
+
+    @GetMapping("/profile")
+    public String getProfile(Model model) {
+        Client client = getCurrentClient();
+        model.addAttribute("client", clientMapper.clientToClientDTO(client));
+        return "profile";
+    }
+
 
 
 }
