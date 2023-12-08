@@ -1,17 +1,20 @@
 package com.mrojasdev.tsystemstore.controller;
 
+import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientAddress;
 import com.mrojasdev.tsystemstore.model.ClientAddressDTO;
 import com.mrojasdev.tsystemstore.service.ClientAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/addresses")
+@Controller
+@RequestMapping("/api/addresses")
 public class ClientAddressController {
 
     private final ClientAddressService clientAddressService;
@@ -32,21 +35,38 @@ public class ClientAddressController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientAddress> saveAddress(@RequestBody ClientAddress clientAddress) {
+    public String saveAddress(@ModelAttribute("address") ClientAddress clientAddress) {
         clientAddressService.addAddress(clientAddress);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return "redirect:/addresses";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteAddress(@PathVariable Long id) {
         clientAddressService.deleteAddress(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/addresses";
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateAddress(@PathVariable Long id, @RequestBody ClientAddress updatedAddress) {
         clientAddressService.updateAddress(id, updatedAddress);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /*
+    Saves the address for the current user
+     */
+    @PostMapping("/current")
+    public String saveAddressCurrentUser(@ModelAttribute("address") ClientAddress clientAddress) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = null;
+        if(principal instanceof Client){
+            client = ((Client) principal);
+        }
+        clientAddress.setClient(client);
+
+        clientAddressService.addAddress(clientAddress);
+        return "redirect:/addresses";
     }
 
 

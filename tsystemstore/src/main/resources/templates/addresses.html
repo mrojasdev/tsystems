@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="author" content="Manuel López Rojas" />
+  <title>Arietta - Tsystems Store</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="favicon.png" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Header-->
+<header class="bg-lights py-3">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-dark">
+      <h1 class="display-4 fw-bolder">Arietta</h1>
+      <p class="lead fw-normal text-dark-50 mb-0">Musical Instruments Store</p>
+    </div>
+  </div>
+</header>
+<!-- Navigation-->
+<nav th:replace="~{fragments :: adminnav}"></nav>
+<!-- Section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <a th:href="@{/create-address}">
+      <div class="text-center mb-4">
+        <button type="button" class="btn btn-primary">Add New Address</button>
+      </div>
+    </a>
+
+
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 justify-content-center">
+      <div class="col-lg-4 mb-5">
+        <ul class="list-group" th:each="address: ${addresses}">
+          <!-- Address 1 -->
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>Country: </strong> <span th:text="${address.country}">Country1</span><br>
+              <strong>City: </strong><span th:text="${address.city}">City1</span><br>
+              <strong>Postal Code: </strong><span th:text="${address.postalCode}">PostalCode1</span><br>
+              <strong>Street: </strong><span th:text="${address.street}">Street1</span><br>
+              <strong>Home: </strong><span th:text="${address.home}">Home1</span><br>
+              <strong>Apartment: </strong><span th:text="${address.apartment}">Apartment1</span><br>
+            </div>
+            <form action="#" th:action="@{/api/addresses/delete/{id}(id=${address.id})}" method="post">
+              <div class="ml-auto">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </form>
+
+          </li>
+        </ul>
+      </div>
+      <!-- End of section-->
+    </div>
+  </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Arietta 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>

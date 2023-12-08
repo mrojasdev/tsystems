@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class ClientAddressDTO implements Serializable {
+    long id;
     private String country;
     private String city;
     private int postalCode;

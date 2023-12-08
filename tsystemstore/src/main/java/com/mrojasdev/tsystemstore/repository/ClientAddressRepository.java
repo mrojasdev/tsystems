@@ -4,8 +4,10 @@ import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ClientAddressRepository extends JpaRepository<ClientAddress, Long> {
 
-    ClientAddress findByClient(Client client);
+    List<ClientAddress> findByClient(Client client);
 
 }
