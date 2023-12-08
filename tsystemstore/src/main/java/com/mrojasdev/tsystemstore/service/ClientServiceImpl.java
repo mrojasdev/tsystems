@@ -13,6 +13,7 @@ import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,9 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     @Transactional
@@ -56,6 +60,8 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public void addClient(Client client) {
         try{
+            client.setRole("ROLE_USER");
+            client.setPassword(passwordEncoder.encode(client.getPassword()));
             clientRepository.save(client);
         }catch(DataIntegrityViolationException ex){
             throw new DuplicateClientEmailException("Email already exists in database");

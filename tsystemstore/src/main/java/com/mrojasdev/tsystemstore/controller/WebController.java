@@ -74,6 +74,12 @@ public class WebController {
         return "profile";
     }
 
+    @GetMapping("/register")
+    public String getRegister(Model model) {
+        model.addAttribute("client", new Client());
+        return "register";
+    }
+
 
 
 }

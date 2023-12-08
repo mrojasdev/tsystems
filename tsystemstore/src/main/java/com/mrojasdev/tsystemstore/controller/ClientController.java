@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/clients")
 public class ClientController {
 
@@ -34,9 +34,9 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> saveClient(@RequestBody Client client) {
+    public String saveClient(@ModelAttribute("client") Client client) {
         clientService.addClient(client);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return "redirect:/";
     }
 
     @DeleteMapping("/{id}")
