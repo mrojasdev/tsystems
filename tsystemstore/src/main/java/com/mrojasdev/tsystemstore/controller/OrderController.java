@@ -1,22 +1,25 @@
 package com.mrojasdev.tsystemstore.controller;
 
-import com.mrojasdev.tsystemstore.model.Order;
-import com.mrojasdev.tsystemstore.model.OrderDTO;
-import com.mrojasdev.tsystemstore.model.ProductDTO;
-import com.mrojasdev.tsystemstore.service.OrderService;
+import com.mrojasdev.tsystemstore.model.*;
+import com.mrojasdev.tsystemstore.service.CartService;
 import com.mrojasdev.tsystemstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@RestController
-@RequestMapping("/orders")
+@Controller
+@RequestMapping("/api/orders")
 public class OrderController {
     
     private final OrderService orderService;
+
+    private CartService cartService;
     
     @Autowired
     public OrderController(OrderService orderService){
@@ -34,9 +37,17 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
+    public String saveOrder(@ModelAttribute("order") Order order) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = null;
+        if(principal instanceof Client){
+            client = ((Client) principal);
+        }
+        order.setClient(client);
+        order.setOrderDate(LocalDate.now());
         orderService.placeOrder(order);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        cartService.checkoutCart(client, order);
+        return "redirect:/";
     }
 
     @PutMapping("/{id}")

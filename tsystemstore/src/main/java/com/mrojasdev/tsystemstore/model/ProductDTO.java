@@ -13,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ProductDTO implements Serializable {
 
+    private int id;
     private String title;
     private double price;
     private String category;

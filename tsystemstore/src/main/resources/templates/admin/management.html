@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="author" content="Manuel López Rojas" />
+  <title>Arietta - Tsystems Store</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="favicon.png" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <link href="../styles.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Header-->
+<header class="bg-lights py-3">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-dark">
+      <h1 class="display-4 fw-bolder">Arietta</h1>
+      <p class="lead fw-normal text-dark-50 mb-0">Musical Instruments Store</p>
+    </div>
+  </div>
+</header>
+<!-- Navigation-->
+<nav th:replace="~{fragments :: adminnav}"></nav>
+<!-- Section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-2">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="col mb-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <a th:href="@{/admin/statistics}" class="card-link">
+                <div class="card bg-dark text-white text-center">
+                  <div class="card-body">
+                    <i class="bi bi-truck"></i>
+                    <p class="card-text">See Statistics</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <a th:href="@{/admin/orders}" class="card-link">
+                <div class="card bg-dark text-white text-center">
+                  <div class="card-body">
+                    <i class="bi bi-box-seam"></i>
+                    <p class="card-text">Manage Orders</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <a th:href="@{/admin/products}" class="card-link">
+                <div class="card bg-dark text-white text-center">
+                  <div class="card-body">
+                    <i class="bi bi-box-seam"></i>
+                    <p class="card-text">Manage Products</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of section-->
+    </div>
+    <div class="container mt-2 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group row">
+                <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control-plaintext" id="firstName" value="Client name" th:attr="value = ${client.firstname}" readonly>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control-plaintext" id="lastName" value="Client Surname" th:attr="value = ${client.surname}" readonly>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control-plaintext" id="email" value="clientemail@example.com" th:attr="value = ${client.email}" readonly>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="birthdate" class="col-sm-3 col-form-label">Birthdate</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control-plaintext" id="birthdate" value="1990-01-01" th:attr="value = ${client.birthdate}" readonly>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                  <a th:href="@{/edit-profile}" class="btn btn-primary">Edit Profile</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Arietta 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>

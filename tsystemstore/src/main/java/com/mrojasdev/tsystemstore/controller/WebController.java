@@ -6,6 +6,7 @@ import com.mrojasdev.tsystemstore.mapper.OrderMapper;
 import com.mrojasdev.tsystemstore.mapper.ProductMapper;
 import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientAddress;
+import com.mrojasdev.tsystemstore.model.Order;
 import com.mrojasdev.tsystemstore.repository.ClientAddressRepository;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
@@ -97,6 +98,13 @@ public class WebController {
     public String createAddress(Model model) {
         model.addAttribute("address", new ClientAddress());
         return "create-address";
+    }
+
+    @GetMapping("/admin/management")
+    public String getManagement(Model model) {
+        Client client = getCurrentClient();
+        model.addAttribute("client", clientMapper.clientToClientDTO(client));
+        return "admin/management";
     }
 
 
