@@ -65,4 +65,25 @@ public class CartServiceImpl implements CartService {
             orderProductRepository.save(orderProduct);
         }
     }
+
+    public List<OrderProduct> getCartSummary(Client client) {
+        List<Cart> cartList = cartRepository.findByClient(client);
+        ArrayList<String> productList = new ArrayList<>();
+        cartList.stream().forEach(item -> productList.add(item.getProduct().getId().toString()));
+        Map<String, Long> map = productList.stream()
+                .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        ArrayList<OrderProduct> summaryList = new ArrayList<>();
+        for(Map.Entry<String, Long> entry : map.entrySet()) {
+            long productId = Long.parseLong(entry.getKey());
+            Long count = entry.getValue();
+            double price = productRepository.findById(productId).get().getPrice();
+            OrderProduct summaryItem = new OrderProduct();
+            summaryItem.setProduct(productRepository.findById(productId).get());
+            summaryItem.setQuantity(count.intValue());
+            summaryItem.setTotalPrice(productRepository.findById(productId).get().getPrice() * count.intValue());
+            summaryList.add(summaryItem);
+        }
+
+        return summaryList;
+    }
 }
