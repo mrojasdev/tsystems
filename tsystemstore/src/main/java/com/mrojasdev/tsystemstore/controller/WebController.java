@@ -124,7 +124,10 @@ public class WebController {
     @GetMapping("/checkout")
     public String getCheckout(Model model) {
         Client client = getCurrentClient();
-        model.addAttribute("order", new Order());
+        Order order = new Order();
+        order.setDeliveryMethod("UPS");
+        order.setPaymentMethod("Card");
+        model.addAttribute("order", order);
         model.addAttribute("products", cartService.getCartSummary(client));
         model.addAttribute("addresses",
                 clientAddressMapper.clientAdressesToClientAddressesDTO(
