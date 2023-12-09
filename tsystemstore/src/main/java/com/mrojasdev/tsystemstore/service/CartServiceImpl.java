@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,11 +31,13 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
+    @Transactional
     public List<Cart> getAllCarts() {
         return cartRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void addToCart(long productId) {
         Product product = productRepository.findById(productId).get();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -48,6 +51,8 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(cart);
     }
 
+    @Override
+    @Transactional
     public void checkoutCart(Client client, Order order) {
         List<Cart> cartList = cartRepository.findByClient(client);
         ArrayList<String> productList = new ArrayList<>();
@@ -61,12 +66,16 @@ public class CartServiceImpl implements CartService {
             Product product = productRepository.findById(productId).get();
             int quantity = count.intValue();
             double totalPrice = productRepository.findById(productId).get().getPrice() * count.intValue();
-            OrderProduct op = new OrderProduct( new OrderProductKey(order.getId(), productId) ,order, product, quantity, totalPrice);
-            orderProductRepository.save(op);
+            OrderProduct orderProduct = new OrderProduct( new OrderProductKey(order.getId(), productId) ,order, product, quantity, totalPrice);
+            orderProductRepository.save(orderProduct);
+            // Clear the cart
+            cartRepository.deleteByClient(client);
         }
 
     }
 
+    @Override
+    @Transactional
     public List<OrderProduct> getCartSummary(Client client) {
         List<Cart> cartList = cartRepository.findByClient(client);
         ArrayList<String> productList = new ArrayList<>();
