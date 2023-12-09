@@ -139,6 +139,13 @@ public class WebController {
         return "checkout";
     }
 
+    @GetMapping("/order-history")
+    public String getOrderHistory(Model model) {
+        Client client = getCurrentClient();
+        model.addAttribute("orders", orderRepository.findByClient(client));
+        return "order-history";
+    }
+
 
 
 }
