@@ -44,14 +44,16 @@
               </tr>
               </thead>
               <tbody>
-              <!-- Iterate over the products in the model -->
               <tr th:each="product : ${products}">
                 <td th:text="${product.product.title}">Product Name</td>
                 <td th:text="${product.quantity}">2</td>
-                <td th:text="${product.totalPrice}">$20.00</td>
+                <td th:text="${product.totalPrice}">20.00€</td>
               </tr>
               </tbody>
             </table>
+            <div class="text-center mt-3">
+              <a href="#" th:href="@{/checkout}" class="btn btn-primary">To Checkout</a>
+            </div>
           </div>
         </div>
       </div>

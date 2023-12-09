@@ -121,6 +121,21 @@ public class WebController {
         return "cart";
     }
 
+    @GetMapping("/checkout")
+    public String getCheckout(Model model) {
+        Client client = getCurrentClient();
+        model.addAttribute("order", new Order());
+        model.addAttribute("products", cartService.getCartSummary(client));
+        model.addAttribute("addresses",
+                clientAddressMapper.clientAdressesToClientAddressesDTO(
+                        clientAddressRepository.findByClient(
+                                getCurrentClient()
+                        )
+                )
+        );
+        return "checkout";
+    }
+
 
 
 }

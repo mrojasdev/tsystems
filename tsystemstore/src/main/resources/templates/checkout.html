@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="author" content="Manuel López Rojas" />
+  <title>Arietta - Tsystems Store</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="favicon.png" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Header-->
+<header class="bg-lights py-3">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-dark">
+      <h1 class="display-4 fw-bolder">Arietta</h1>
+      <p class="lead fw-normal text-dark-50 mb-0">Musical Instruments Store</p>
+    </div>
+  </div>
+</header>
+<!-- Navigation-->
+<nav th:replace="~{fragments :: adminnav}"></nav>
+<!-- Section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-2">
+    <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <!-- End of section -->
+    </div>
+
+    <div class="container mt-2 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="container mt-5">
+            <h2>Checkout</h2>
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Price</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!-- Iterate over the products in the model -->
+              <tr th:each="product : ${products}">
+                <td th:text="${product.product.title}">Product Name</td>
+                <td th:text="${product.quantity}">2</td>
+                <td th:text="${product.totalPrice}">$20.00</td>
+              </tr>
+              </tbody>
+            </table>
+            <form th:action="@{/api/orders/checkout}" method="post" th:object="${order}">
+              <div class="mb-3">
+                <label for="clientAddress" class="form-label">Client Address</label>
+                <select id="clientAddress" name="clientAddress" class="form-select" th:field="*{clientAddress}">
+                  <option value="address1" th:each="address : ${addresses}" th:value="${address.id}" th:text="${address.street}">Address 1</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label d-block">Payment Method</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="card" th:field="*{paymentMethod}" th:value="Card" checked>
+                  <label class="form-check-label" for="card"><i class="bi bi-credit-card"></i> Card</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal" th:field="*{paymentMethod}" th:value="Paypal">
+                  <label class="form-check-label" for="paypal"><i class="bi bi-paypal"></i> Paypal</label>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label d-block">Delivery Method</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="deliveryMethod" id="ups" value="UPS" th:field="*{deliveryMethod}" th:value="UPS" checked>
+                  <label class="form-check-label" for="ups">UPS</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="deliveryMethod" id="upsExpress" value="upsExpress" th:field="*{deliveryMethod}" th:value="'UPS Express'">
+                  <label class="form-check-label" for="upsExpress">UPS Express</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="deliveryMethod" id="dhl" value="dhl" th:field="*{deliveryMethod}" th:value="DHL">
+                  <label class="form-check-label" for="dhl">DHL</label>
+                </div>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary">Purchase Items</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Arietta 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>

@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderDTO implements Serializable {
 
+    private long id;
     private ClientDTO client;
     private ClientAddressDTO clientAddress;
     private String paymentMethod;

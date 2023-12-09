@@ -48,8 +48,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void placeOrder(Order order) {
-        orderRepository.save(order);
+    public Order placeOrder(Order order) {
+        Order savedOrder = orderRepository.save(order);
+        return savedOrder;
     }
 
     @Override

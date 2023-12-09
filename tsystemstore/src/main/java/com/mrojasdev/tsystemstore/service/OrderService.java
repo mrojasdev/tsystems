@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface OrderService {
     List<OrderDTO> getAllOrders();
     OrderDTO getOrderById(long orderId);
-    void placeOrder(Order order);
+    Order placeOrder(Order order);
     void updateOrderStatus(long orderId, String status);
     List<ProductDTO> listOrderProducts(long orderId);
 }

@@ -19,6 +19,7 @@ public class OrderController {
     
     private final OrderService orderService;
 
+    @Autowired
     private CartService cartService;
     
     @Autowired
@@ -36,7 +37,7 @@ public class OrderController {
         return orderService.getOrderById(id);
     }
 
-    @PostMapping
+    @PostMapping("/checkout")
     public String saveOrder(@ModelAttribute("order") Order order) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Client client = null;
@@ -45,8 +46,11 @@ public class OrderController {
         }
         order.setClient(client);
         order.setOrderDate(LocalDate.now());
-        orderService.placeOrder(order);
-        cartService.checkoutCart(client, order);
+        order.setPaymentStatus("Pending");
+        order.setOrderStatus("Pending payment");
+        Order savedOrder = orderService.placeOrder(order);
+        System.out.println(savedOrder.getId());
+        cartService.checkoutCart(client, savedOrder);
         return "redirect:/";
     }
 
