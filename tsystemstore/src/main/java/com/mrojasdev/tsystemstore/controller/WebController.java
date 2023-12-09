@@ -114,6 +114,12 @@ public class WebController {
         return "admin/management";
     }
 
+    @GetMapping("/admin/orders")
+    public String getAdminOrders(Model model) {
+        model.addAttribute("orders", orderRepository.findAll());
+        return "admin/orders";
+    }
+
     @GetMapping("/cart")
     public String getCart(Model model) {
         Client client = getCurrentClient();

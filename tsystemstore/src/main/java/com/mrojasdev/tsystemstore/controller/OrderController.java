@@ -65,5 +65,23 @@ public class OrderController {
         return orderService.listOrderProducts(id);
     }
 
+    @PostMapping("/shipped/{id}")
+    public String updateOrderShipped(@PathVariable Long id) {
+        orderService.updateOrderStatus(id, "Shipped");
+        return "redirect:/admin/orders";
+    }
+
+    @PostMapping("/delivered/{id}")
+    public String updateOrderDelivered(@PathVariable Long id) {
+        orderService.updateOrderStatus(id, "Delivered");
+        return "redirect:/admin/orders";
+    }
+
+    @PostMapping("/paid/{id}")
+    public String updateOrderPaid(@PathVariable Long id) {
+        orderService.updateOrderPaymentStatus(id, "Paid");
+        return "redirect:/admin/orders";
+    }
+
 
 }

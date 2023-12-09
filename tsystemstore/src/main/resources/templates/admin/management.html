@@ -31,11 +31,11 @@
       <div class="col mb-5">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-6 mb-3">
               <a th:href="@{/admin/statistics}" class="card-link">
                 <div class="card bg-dark text-white text-center">
                   <div class="card-body">
-                    <i class="bi bi-truck"></i>
+                    <i class="bi bi-graph-up"></i>
                     <p class="card-text">See Statistics</p>
                   </div>
                 </div>
@@ -55,7 +55,7 @@
               <a th:href="@{/admin/products}" class="card-link">
                 <div class="card bg-dark text-white text-center">
                   <div class="card-body">
-                    <i class="bi bi-box-seam"></i>
+                    <i class="bi bi-handbag"></i>
                     <p class="card-text">Manage Products</p>
                   </div>
                 </div>
@@ -93,11 +93,6 @@
                 <label for="birthdate" class="col-sm-3 col-form-label">Birthdate</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control-plaintext" id="birthdate" value="1990-01-01" th:attr="value = ${client.birthdate}" readonly>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-12 text-center">
-                  <a th:href="@{/edit-profile}" class="btn btn-primary">Edit Profile</a>
                 </div>
               </div>
             </div>

@@ -12,5 +12,6 @@ public interface OrderService {
     OrderDTO getOrderById(long orderId);
     Order placeOrder(Order order);
     void updateOrderStatus(long orderId, String status);
+    void updateOrderPaymentStatus(long orderId, String status);
     List<ProductDTO> listOrderProducts(long orderId);
 }

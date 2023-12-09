@@ -66,6 +66,17 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    public void updateOrderPaymentStatus(long orderId, String status) {
+        Optional<Order> existingOrder = orderRepository.findById(orderId);
+        if(existingOrder.isPresent()){
+            Order orderToUpdate = existingOrder.get();
+            orderToUpdate.setPaymentStatus(status);
+            orderRepository.save(orderToUpdate);
+        } else {
+            throw new OrderNotFoundException("order doesn't exist in database");
+        }
+    }
+
     @Override
     @Transactional
     public List<ProductDTO> listOrderProducts(long orderId){
