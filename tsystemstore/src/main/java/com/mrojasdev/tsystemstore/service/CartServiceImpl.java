@@ -96,4 +96,12 @@ public class CartServiceImpl implements CartService {
 
         return summaryList;
     }
+
+    @Override
+    @Transactional
+    public int cartItemCount(Client client) {
+        List<Cart> cartList = cartRepository.findByClient(client);
+        return cartList.size();
+    }
+
 }

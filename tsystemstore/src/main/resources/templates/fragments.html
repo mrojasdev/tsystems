@@ -38,7 +38,7 @@
         <a class="btn btn-outline-light" th:href="@{/cart}">
           <i class="bi-cart-fill me-1"></i>
           Cart
-          <span class="badge bg-white text-black ms-1 rounded-pill">0</span>
+          <span class="badge bg-white text-black ms-1 rounded-pill" th:text="${cartCount}">0</span>
         </a>
       </form>
     </div>
@@ -72,7 +72,7 @@
         <a class="btn btn-outline-light" th:href="@{/checkout}">
           <i class="bi-cart-fill me-1"></i>
           Cart
-          <span class="badge bg-white text-black ms-1 rounded-pill">0</span>
+          <span class="badge bg-white text-black ms-1 rounded-pill" th:text="${cartCount}">0</span>
         </a>
       </form>
     </div>
