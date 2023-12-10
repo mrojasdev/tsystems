@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/products")
 public class ProductController {
     
@@ -62,6 +62,12 @@ public class ProductController {
     @GetMapping("/brand/{brand}")
     public List<ProductDTO> getProductsOfBrand(@PathVariable String brand) {
         return productService.getProductsOfBrand(brand);
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProductInfo(@PathVariable Long id, @ModelAttribute("product") Product updatedProduct) {
+        productService.updateProduct(id, updatedProduct);
+        return "redirect:/admin/list-products";
     }
     
     

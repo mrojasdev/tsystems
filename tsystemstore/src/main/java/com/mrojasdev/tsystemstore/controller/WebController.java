@@ -1,13 +1,11 @@
 package com.mrojasdev.tsystemstore.controller;
 
+import com.mrojasdev.tsystemstore.exception.ProductNotFoundException;
 import com.mrojasdev.tsystemstore.mapper.ClientAddressMapper;
 import com.mrojasdev.tsystemstore.mapper.ClientMapper;
 import com.mrojasdev.tsystemstore.mapper.OrderMapper;
 import com.mrojasdev.tsystemstore.mapper.ProductMapper;
-import com.mrojasdev.tsystemstore.model.Client;
-import com.mrojasdev.tsystemstore.model.ClientAddress;
-import com.mrojasdev.tsystemstore.model.Order;
-import com.mrojasdev.tsystemstore.model.OrderProduct;
+import com.mrojasdev.tsystemstore.model.*;
 import com.mrojasdev.tsystemstore.repository.ClientAddressRepository;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
@@ -20,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -118,6 +117,21 @@ public class WebController {
     public String getAdminOrders(Model model) {
         model.addAttribute("orders", orderRepository.findAll());
         return "admin/orders";
+    }
+
+    @GetMapping("/admin/list-products")
+    public String getAdminProductsList(Model model) {
+        model.addAttribute("products", productRepository.findAll());
+        return "admin/list-products";
+    }
+
+    @GetMapping(path = "/admin/edit-product/{id}")
+    public String getAdminProductEdit(@PathVariable("id") Long id, Model model) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException("Product with id "+id+" not found")
+        );
+        model.addAttribute("product", product);
+        return "admin/edit-product";
     }
 
     @GetMapping("/cart")
