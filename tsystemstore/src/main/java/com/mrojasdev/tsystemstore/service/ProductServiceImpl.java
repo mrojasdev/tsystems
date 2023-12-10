@@ -117,5 +117,15 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public List<String> getAllCategories() {
+        List<String> categories = productRepository.findAll().stream()
+                .map(Product::getCategory)
+                .distinct()
+                .collect(Collectors.toList());
+        return categories;
+    }
+
 
 }

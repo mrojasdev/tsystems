@@ -17,4 +17,5 @@ public interface ProductService {
     List<ProductDTO> getProductsOfColor(String color);
     List<ProductDTO> getProductsOfBrand(String brand);
     List<TopProductDTO> getTopTenProductsMostSold();
+    List<String> getAllCategories();
 }

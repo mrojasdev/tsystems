@@ -74,19 +74,30 @@ public class WebController {
 
 
     @GetMapping("/")
-    public String getHome() {
+    public String getHome(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         return "index";
     }
 
     @GetMapping("/products")
     public String getProducts(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("products", productMapper.productsToProductsDTO(productRepository.findAll()));
         return "products";
+    }
+
+    @GetMapping("/products/{category}")
+    public String getProductsByCategory(@PathVariable("category") String category, Model model) {
+        List<ProductDTO> products = productService.getProductsOfCategory(category);
+        model.addAttribute("categories", productService.getAllCategories());
+        model.addAttribute("products", products);
+        return "category-products";
     }
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
         Client client = getCurrentClient();
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("client", clientMapper.clientToClientDTO(client));
         return "profile";
     }
@@ -99,6 +110,7 @@ public class WebController {
 
     @GetMapping("/addresses")
     public String getAddresses(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("addresses",
                 clientAddressMapper.clientAdressesToClientAddressesDTO(
                         clientAddressRepository.findByClient(
@@ -111,6 +123,7 @@ public class WebController {
 
     @GetMapping("/create-address")
     public String createAddress(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("address", new ClientAddress());
         return "create-address";
     }
@@ -118,18 +131,21 @@ public class WebController {
     @GetMapping("/admin/management")
     public String getManagement(Model model) {
         Client client = getCurrentClient();
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("client", clientMapper.clientToClientDTO(client));
         return "admin/management";
     }
 
     @GetMapping("/admin/orders")
     public String getAdminOrders(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("orders", orderRepository.findAll());
         return "admin/orders";
     }
 
     @GetMapping("/admin/list-products")
     public String getAdminProductsList(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("products", productRepository.findAll());
         return "admin/list-products";
     }
@@ -139,12 +155,14 @@ public class WebController {
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new ProductNotFoundException("Product with id "+id+" not found")
         );
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("product", product);
         return "admin/edit-product";
     }
 
     @GetMapping("/admin/create-product")
     public String getAdminProductCreate(Model model) {
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("product", new Product());
         return "admin/create-product";
     }
@@ -153,6 +171,7 @@ public class WebController {
     public String getAdminStatistics(Model model) {
         List<TopClientDTO> topTenClients = clientService.getTopTenClientsMostOrders();
         List<TopProductDTO> topTenProducts = productService.getTopTenProductsMostSold();
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("customers", topTenClients);
         model.addAttribute("products", topTenProducts);
         return "admin/statistics";
@@ -161,6 +180,7 @@ public class WebController {
     @GetMapping("/cart")
     public String getCart(Model model) {
         Client client = getCurrentClient();
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("products", cartService.getCartSummary(client));
         return "cart";
     }
@@ -171,6 +191,7 @@ public class WebController {
         Order order = new Order();
         order.setDeliveryMethod("UPS");
         order.setPaymentMethod("Card");
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("order", order);
         model.addAttribute("products", cartService.getCartSummary(client));
         model.addAttribute("addresses",
@@ -186,6 +207,7 @@ public class WebController {
     @GetMapping("/order-history")
     public String getOrderHistory(Model model) {
         Client client = getCurrentClient();
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("orders", orderRepository.findByClient(client));
         return "order-history";
     }
