@@ -75,7 +75,7 @@ public class ClientServiceImpl implements ClientService {
             clientToUpdate.setBirthdate(updatedClient.getBirthdate());
             clientToUpdate.setFirstname(updatedClient.getFirstname());
             clientToUpdate.setSurname(updatedClient.getSurname());
-            clientToUpdate.setPassword(updatedClient.getPassword());
+            clientToUpdate.setPassword(passwordEncoder.encode(updatedClient.getPassword()));
             clientRepository.save(clientToUpdate);
         } else {
             throw new ClientNotFoundException("client doesn't exist in database");

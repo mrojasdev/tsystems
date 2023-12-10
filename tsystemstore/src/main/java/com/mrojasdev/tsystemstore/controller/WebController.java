@@ -212,6 +212,14 @@ public class WebController {
         return "order-history";
     }
 
+    @GetMapping("/edit-profile")
+    public String getEditProfile(Model model) {
+        Client client = getCurrentClient();
+        model.addAttribute("categories", productService.getAllCategories());
+        model.addAttribute("client", client);
+        return "edit-profile";
+    }
+
 
 
 }

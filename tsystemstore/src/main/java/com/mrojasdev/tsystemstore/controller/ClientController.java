@@ -3,6 +3,7 @@ package com.mrojasdev.tsystemstore.controller;
 import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientDTO;
 import com.mrojasdev.tsystemstore.model.OrderDTO;
+import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,10 +46,10 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
+    @PostMapping("/update/{id}")
+    public String updateClient(@PathVariable Long id, @ModelAttribute("client") Client updatedClient) {
         clientService.updateClient(id, updatedClient);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/profile";
     }
 
     /*
