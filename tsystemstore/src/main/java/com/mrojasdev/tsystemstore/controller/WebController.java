@@ -11,6 +11,8 @@ import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
 import com.mrojasdev.tsystemstore.service.CartService;
+import com.mrojasdev.tsystemstore.service.ClientService;
+import com.mrojasdev.tsystemstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping()
@@ -53,6 +56,12 @@ public class WebController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private ClientService clientService;
 
     private Client getCurrentClient() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -138,6 +147,15 @@ public class WebController {
     public String getAdminProductCreate(Model model) {
         model.addAttribute("product", new Product());
         return "admin/create-product";
+    }
+
+    @GetMapping("/admin/statistics")
+    public String getAdminStatistics(Model model) {
+        List<TopClientDTO> topTenClients = clientService.getTopTenClientsMostOrders();
+        List<TopProductDTO> topTenProducts = productService.getTopTenProductsMostSold();
+        model.addAttribute("customers", topTenClients);
+        model.addAttribute("products", topTenProducts);
+        return "admin/statistics";
     }
 
     @GetMapping("/cart")

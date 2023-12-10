@@ -2,6 +2,7 @@ package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.model.ProductDTO;
+import com.mrojasdev.tsystemstore.model.TopProductDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,5 @@ public interface ProductService {
     List<ProductDTO> getProductsOfCategory(String category);
     List<ProductDTO> getProductsOfColor(String color);
     List<ProductDTO> getProductsOfBrand(String brand);
+    List<TopProductDTO> getTopTenProductsMostSold();
 }

@@ -2,16 +2,19 @@ package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.ProductNotFoundException;
 import com.mrojasdev.tsystemstore.mapper.ProductMapper;
+import com.mrojasdev.tsystemstore.model.OrderProduct;
 import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.model.ProductDTO;
+import com.mrojasdev.tsystemstore.model.TopProductDTO;
+import com.mrojasdev.tsystemstore.repository.OrderProductRepository;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
 
     @Override
     @Transactional
@@ -94,6 +100,21 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAll();
         products = products.stream().filter(product -> product.getBrand().equals(brand)).toList();
         return productMapper.productsToProductsDTO(products);
+    }
+
+    @Override
+    @Transactional
+    public List<TopProductDTO> getTopTenProductsMostSold() {
+        List<OrderProduct> allOrderProducts = orderProductRepository.findAll();
+
+        Map<Product, Long> totalQuantityByProduct = allOrderProducts.stream()
+                .collect(Collectors.groupingBy(OrderProduct::getProduct, Collectors.summingLong(OrderProduct::getQuantity)));
+
+        return totalQuantityByProduct.entrySet().stream()
+                .sorted((entry1, entry2) -> Long.compare(entry2.getValue(), entry1.getValue()))
+                .limit(10)
+                .map(entry -> new TopProductDTO(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
 
