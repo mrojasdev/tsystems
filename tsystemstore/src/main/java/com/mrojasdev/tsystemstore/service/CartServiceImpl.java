@@ -104,4 +104,15 @@ public class CartServiceImpl implements CartService {
         return cartList.size();
     }
 
+    @Override
+    @Transactional
+    public void deleteCart() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = null;
+        if(principal instanceof Client){
+            client = ((Client) principal);
+        }
+        cartRepository.deleteByClient(client);
+    }
+
 }

@@ -12,4 +12,5 @@ public interface CartService {
     int cartItemCount(Client client);
 
     List<OrderProduct> getCartSummary(Client client);
+    void deleteCart();
 }

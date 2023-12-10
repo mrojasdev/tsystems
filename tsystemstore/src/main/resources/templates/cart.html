@@ -51,6 +51,11 @@
             <div class="text-center mt-3">
               <a href="#" th:href="@{/checkout}" class="btn btn-primary">To Checkout</a>
             </div>
+            <div class="text-center mt-3">
+              <form th:action="@{/deleteCart}" method="post">
+                <button type="submit" class="btn btn-danger">Clear Cart</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
