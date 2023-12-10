@@ -134,6 +134,12 @@ public class WebController {
         return "admin/edit-product";
     }
 
+    @GetMapping("/admin/create-product")
+    public String getAdminProductCreate(Model model) {
+        model.addAttribute("product", new Product());
+        return "admin/create-product";
+    }
+
     @GetMapping("/cart")
     public String getCart(Model model) {
         Client client = getCurrentClient();

@@ -1,5 +1,6 @@
 package com.mrojasdev.tsystemstore.controller;
 
+import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.model.Product;
 import com.mrojasdev.tsystemstore.model.ProductDTO;
@@ -32,9 +33,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+    public String saveProduct(@ModelAttribute("product") Product product) {
         productService.addProduct(product);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return "redirect:/admin/list-products";
     }
 
     @DeleteMapping("/{id}")
