@@ -76,7 +76,6 @@ public class WebController {
     @GetMapping("/")
     public String getHome(Model model) {
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
-        System.out.println(cartService.cartItemCount(getCurrentClient()));
         model.addAttribute("categories", productService.getAllCategories());
         return "index";
     }
@@ -135,6 +134,7 @@ public class WebController {
         return "create-address";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/admin/management")
     public String getManagement(Model model) {
         Client client = getCurrentClient();
@@ -144,6 +144,7 @@ public class WebController {
         return "admin/management";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/admin/orders")
     public String getAdminOrders(Model model) {
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
@@ -152,6 +153,7 @@ public class WebController {
         return "admin/orders";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/admin/list-products")
     public String getAdminProductsList(Model model) {
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
@@ -160,6 +162,7 @@ public class WebController {
         return "admin/list-products";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(path = "/admin/edit-product/{id}")
     public String getAdminProductEdit(@PathVariable("id") Long id, Model model) {
         Product product = productRepository.findById(id).orElseThrow(
@@ -171,6 +174,7 @@ public class WebController {
         return "admin/edit-product";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/admin/create-product")
     public String getAdminProductCreate(Model model) {
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
@@ -179,6 +183,7 @@ public class WebController {
         return "admin/create-product";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/admin/statistics")
     public String getAdminStatistics(Model model) {
         List<TopClientDTO> topTenClients = clientService.getTopTenClientsMostOrders();

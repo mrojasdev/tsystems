@@ -22,7 +22,9 @@
     </div>
 </header>
 <!-- Navigation-->
-<nav th:replace="~{fragments :: adminnav}"></nav>
+<nav sec:authorize="hasRole('ADMIN')" th:replace="~{fragments :: adminnav}"></nav>
+<nav sec:authorize="hasRole('USER')" th:replace="~{fragments :: clientnav}"></nav>
+<nav sec:authorize="!isAuthenticated()" th:replace="~{fragments :: guestnav}"></nav>
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-2">
