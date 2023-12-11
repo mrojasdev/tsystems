@@ -2,6 +2,7 @@ package com.mrojasdev.tsystemstore.service;
 
 import com.mrojasdev.tsystemstore.exception.AddressNotFoundException;
 import com.mrojasdev.tsystemstore.mapper.ClientAddressMapper;
+import com.mrojasdev.tsystemstore.model.Client;
 import com.mrojasdev.tsystemstore.model.ClientAddress;
 import com.mrojasdev.tsystemstore.model.ClientAddressDTO;
 import com.mrojasdev.tsystemstore.repository.ClientAddressRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,9 @@ public class ClientAddressServiceImpl implements ClientAddressService {
     @Transactional
     public List<ClientAddressDTO> getAllAddresses() {
         List<ClientAddress> addresses = clientAddressRepository.findAll();
+        addresses = addresses.stream()
+                .filter(address -> address.isDeleted() == false)
+                .collect(Collectors.toList());
         return clientAddressMapper.clientAdressesToClientAddressesDTO(addresses);
     }
 
@@ -66,6 +71,23 @@ public class ClientAddressServiceImpl implements ClientAddressService {
     @Override
     @Transactional
     public void deleteAddress(long addressId) {
-        clientAddressRepository.deleteById(addressId);
+        Optional<ClientAddress> addressToDelete = clientAddressRepository.findById(addressId);
+        if(addressToDelete.isPresent()) {
+            ClientAddress address = addressToDelete.get();
+            address.setDeleted(true);
+            clientAddressRepository.save(address);
+        } else {
+            throw new AddressNotFoundException("address doesn't exist in database");
+        }
+    }
+
+    @Override
+    @Transactional
+    public List<ClientAddressDTO> getAddressesByClient(Client client) {
+        List<ClientAddress> addresses = clientAddressRepository.findByClient(client);
+        addresses = addresses.stream()
+                .filter(address -> address.isDeleted() == false)
+                .collect(Collectors.toList());
+        return clientAddressMapper.clientAdressesToClientAddressesDTO(addresses);
     }
 }

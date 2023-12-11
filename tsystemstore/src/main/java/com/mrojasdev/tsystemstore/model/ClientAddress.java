@@ -40,4 +40,7 @@ public class ClientAddress {
     @Column(name = "apartment")
     private String apartment;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
 }

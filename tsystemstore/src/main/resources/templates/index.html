@@ -27,7 +27,6 @@
         <nav sec:authorize="hasRole('USER')" th:replace="~{fragments :: clientnav}"></nav>
         <nav sec:authorize="!isAuthenticated()" th:replace="~{fragments :: guestnav}"></nav>
         <!-- Section-->
-        <!-- Section with project information-->
         <section class="py-5 bg-light">
             <div class="container px-4 px-lg-5">
                 <div class="card border-0 shadow-lg p-5">

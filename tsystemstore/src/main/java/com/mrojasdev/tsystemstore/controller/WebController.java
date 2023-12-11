@@ -11,6 +11,7 @@ import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
 import com.mrojasdev.tsystemstore.service.CartService;
+import com.mrojasdev.tsystemstore.service.ClientAddressService;
 import com.mrojasdev.tsystemstore.service.ClientService;
 import com.mrojasdev.tsystemstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,6 @@ import java.util.Map;
 @Controller
 @RequestMapping()
 public class WebController {
-
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private ClientAddressRepository clientAddressRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -62,6 +57,9 @@ public class WebController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    ClientAddressService clientAddressService;
 
     private Client getCurrentClient() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -116,13 +114,7 @@ public class WebController {
     public String getAddresses(Model model) {
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
         model.addAttribute("categories", productService.getAllCategories());
-        model.addAttribute("addresses",
-                clientAddressMapper.clientAdressesToClientAddressesDTO(
-                        clientAddressRepository.findByClient(
-                                getCurrentClient()
-                        )
-                )
-        );
+        model.addAttribute("addresses", clientAddressService.getAddressesByClient(getCurrentClient()));
         return "addresses";
     }
 
@@ -214,13 +206,7 @@ public class WebController {
         model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("order", order);
         model.addAttribute("products", cartService.getCartSummary(client));
-        model.addAttribute("addresses",
-                clientAddressMapper.clientAdressesToClientAddressesDTO(
-                        clientAddressRepository.findByClient(
-                                getCurrentClient()
-                        )
-                )
-        );
+        model.addAttribute("addresses", clientAddressService.getAddressesByClient(client));
         return "checkout";
     }
 
