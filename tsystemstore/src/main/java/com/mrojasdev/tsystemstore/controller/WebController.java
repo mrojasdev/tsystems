@@ -39,13 +39,7 @@ public class WebController {
 
     @Autowired
     private ClientMapper clientMapper;
-
-    @Autowired
-    private ClientAddressMapper clientAddressMapper;
-
-    @Autowired
-    private OrderMapper orderMapper;
-
+    
     @Autowired
     private ProductMapper productMapper;
 
