@@ -1,8 +1,6 @@
 package com.mrojasdev.tsystemstore.service;
 
-import com.mrojasdev.tsystemstore.model.Order;
-import com.mrojasdev.tsystemstore.model.OrderDTO;
-import com.mrojasdev.tsystemstore.model.ProductDTO;
+import com.mrojasdev.tsystemstore.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +12,6 @@ public interface OrderService {
     void updateOrderStatus(long orderId, String status);
     void updateOrderPaymentStatus(long orderId, String status);
     List<ProductDTO> listOrderProducts(long orderId);
+    List<OrderDTO> getOrdersDTObyClient(Client client);
+    List<Order> getOrdersByClient(Client client);
 }

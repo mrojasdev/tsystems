@@ -10,10 +10,7 @@ import com.mrojasdev.tsystemstore.repository.ClientAddressRepository;
 import com.mrojasdev.tsystemstore.repository.ClientRepository;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import com.mrojasdev.tsystemstore.repository.ProductRepository;
-import com.mrojasdev.tsystemstore.service.CartService;
-import com.mrojasdev.tsystemstore.service.ClientAddressService;
-import com.mrojasdev.tsystemstore.service.ClientService;
-import com.mrojasdev.tsystemstore.service.ProductService;
+import com.mrojasdev.tsystemstore.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +29,7 @@ import java.util.Map;
 public class WebController {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @Autowired
     private ProductRepository productRepository;
@@ -135,7 +132,7 @@ public class WebController {
     public String getAdminOrders(Model model) {
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
         model.addAttribute("categories", productService.getAllCategories());
-        model.addAttribute("orders", orderRepository.findAll());
+        model.addAttribute("orders", orderService.getAllOrders());
         return "admin/orders";
     }
 
@@ -209,7 +206,7 @@ public class WebController {
         Client client = getCurrentClient();
         model.addAttribute("cartCount", cartService.cartItemCount(getCurrentClient()));
         model.addAttribute("categories", productService.getAllCategories());
-        model.addAttribute("orders", orderRepository.findByClient(client));
+        model.addAttribute("orders", orderService.getOrdersByClient(client));
         return "order-history";
     }
 

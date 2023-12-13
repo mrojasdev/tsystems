@@ -3,10 +3,7 @@ package com.mrojasdev.tsystemstore.service;
 import com.mrojasdev.tsystemstore.exception.OrderNotFoundException;
 import com.mrojasdev.tsystemstore.mapper.OrderMapper;
 import com.mrojasdev.tsystemstore.mapper.ProductMapper;
-import com.mrojasdev.tsystemstore.model.Order;
-import com.mrojasdev.tsystemstore.model.OrderDTO;
-import com.mrojasdev.tsystemstore.model.Product;
-import com.mrojasdev.tsystemstore.model.ProductDTO;
+import com.mrojasdev.tsystemstore.model.*;
 import com.mrojasdev.tsystemstore.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -90,6 +88,17 @@ public class OrderServiceImpl implements OrderService {
                 )
         ));
         return products;
+    }
+
+    @Override
+    @Transactional
+    public List<OrderDTO> getOrdersDTObyClient(Client client) {
+        List<Order> orders = orderRepository.findByClient(client);
+        return orderMapper.ordersToOrdersDTO(orders);
+    }
+
+    public List<Order> getOrdersByClient(Client client) {
+        return orderRepository.findByClient(client);
     }
 
 }
